@@ -12,6 +12,7 @@ if (isset($_POST['R_Registrar'])) {
   $libromayor = $_POST['u_libromayor'];
   $balanzadecomprobaciondeajustes = $_POST['u_balanzadecomprobaciondeajustes'];
   $usuarios= $_POST['u_usuarios'];
+  $ajustes=$_POST['u_ajustes'];
 
   if (!$plancontable==NULL) {
 		$permisos = $permisos . $plancontable.",";
@@ -37,8 +38,7 @@ if (isset($_POST['R_Registrar'])) {
   if (!$usuarios==NULL) {
 		$permisos = $permisos . $usuarios.",";
 	}
-  //echo "--".$permisos;
-	//$ingresar =$usuariosql->Registrar_Usuario($usuario,$contrasena,$permisos);
+	$ingresar =$objUsuario->Registrar_Usuario($usuario,$contrasena,$permisos);
 	echo '<div class="alert alert-success">
 	<button type="button" class="close" data-dismiss="alert">×</button>
 	<strong>Mensaje!</strong> Usuario registrado orrectamente
@@ -105,6 +105,9 @@ if (isset($_POST['R_Registrar'])) {
                 </label>
                 <label class="checkbox">
                   <input type="checkbox" value="8" name="u_libromayor"> Usuarios
+    						</label>
+                <label class="checkbox">
+                  <input type="checkbox" value="9" name="u_ajustes"> Ajustes
     						</label>
     					</div>
     				</div>
