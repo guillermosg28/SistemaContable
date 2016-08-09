@@ -38,6 +38,7 @@ function abrirSubCuentas(codigo,nombre){
   $('#codigoCD').html('<div id="codigoCD"><b>Cuenta</b>: '+codigo+'</div>');
   $('#nombreCD').html('<div id="nombreCD"><b>Nombre:</b> '+nombre+'</div>');
   $('#codigoCuenta').val(codigo);
+  $('#nombreCuenta').val(nombre);
   listarSubCuentas(codigo);
 }
 function listarSubCuentas(codigo){
@@ -55,6 +56,7 @@ function abrirDivisionaria(codigo,nombre){
   $('#codigoCD').html('<div id="codigoCD"><b>Cuenta</b>: '+codigo+'</div>');
   $('#nombreCD').html('<div id="nombreCD"><b>Nombre:</b> '+nombre+'</div>');
   $('#codigoCuenta').val(codigo);
+  $('#nombreCuenta').val(nombre);
   listaDivisionarias(codigo);
 }
 function listaDivisionarias(codigo){
@@ -72,6 +74,7 @@ function abrirSubDivisionaria(codigo,nombre){
   $('#codigoCD').html('<div id="codigoCD"><b>Cuenta</b>: '+codigo+'</div>');
   $('#nombreCD').html('<div id="nombreCD"><b>Nombre:</b> '+nombre+'</div>');
   $('#codigoCuenta').val(codigo);
+  $('#nombreCuenta').val(nombre);
   listaSubDivisionarias(codigo);
 }
 function listaSubDivisionarias(codigo){
@@ -89,7 +92,137 @@ function abrirFin(codigo,nombre){
   $('#codigoCD').html('<div id="codigoCD"><b>Cuenta</b>: '+codigo+'</div>');
   $('#nombreCD').html('<div id="nombreCD"><b>Nombre:</b> '+nombre+'</div>');
   $('#codigoCuenta').val(codigo);
+  $('#nombreCuenta').val(nombre);
 }
+
+//JAVASCRIPT AJUSTES
+function agregarTransaccion(){
+  var codigoCuenta = $("#codigoCuenta").val();
+  var nombreCuenta = $("#nombreCuenta").val();
+  var montoT = $("#montoT").val();
+  var tipoT = $("#tipoT").val();
+  if (tipoT=="D") {
+    agregarDebeT(codigoCuenta,nombreCuenta,montoT);
+  }
+  if (tipoT=="H") {
+    agregarHaberT(codigoCuenta,nombreCuenta,montoT);
+  }
+}
+
+var listaDebe = new Array();
+var listaMontoDebe = new Array();
+var totalDebe = 0;
+
+function agregarDebeT(codigoD,nombreD,montoD){
+  var bandD = true;
+  for(i=0;i<listaDebe.length;i++){
+    if(listaDebe[i]==codigoD){
+      alert("Cuenta ya existe");
+      bandD = false;
+    }
+  }
+
+  if(bandD){
+    totalDebe=totalDebe+parseFloat(montoD);
+    $("#totalDebe").html("Total Debe: "+totalDebe+"");
+    $("#listaTransacciones").append("<tr id=\"id_"+codigoD+"\"><td>["+codigoD+"] "+nombreD+"</td><td>"+montoD+"</td><td>0</td><td><a href=\"javascript:void(0);\" onClick=\"eliminarDebe('"+codigoD+"','"+montoD+"');\" class=\"btn btn-success btn-xs\">Eliminar</a></td></tr>");
+    listaDebe.push(codigoD);
+    listaMontoDebe.push(montoD);
+  }
+};
+
+function eliminarDebe(codigo,monto){
+  $("#id_"+codigo).remove();
+  totalDebe=totalDebe-parseFloat(monto);
+  $("#totalDebe").html("Total Debe: "+totalDebe+"");
+  for(i=0;i<listaDebe.length;i++){
+    if(listaDebe[i]==codigo){
+      listaDebe.splice(i,1);
+      listaMontoDebe.splice(i,1);
+    }
+  }
+}
+
+//HABER JQUERY
+var listaHaber = new Array();
+var listaMontoHaber = new Array();
+var totalHaber = 0;
+
+function agregarHaberT(codigoH,nombreH,montoH){
+  var bandH = true;
+  for(i=0;i<listaHaber.length;i++){
+    if(listaHaber[i]==codigoH){
+      alert("Cuenta ya existe");
+      bandH = false;
+    }
+  }
+
+  if(bandH){
+    totalHaber=totalHaber+parseFloat(montoH);
+    $("#totalHaber").html("Total Haber: "+totalHaber+"");
+    $("#listaTransacciones").append("<tr id=\"ih_"+codigoH+"\"><td>["+codigoH+"] "+nombreH+"</td><td>0</td><td>"+montoH+"</td><td><a href=\"javascript:void(0);\" onClick=\"eliminarHaber('"+codigoH+"','"+montoH+"');\" class=\"btn btn-success btn-xs\">Eliminar</a></td></tr>");
+    listaHaber.push(codigoH);
+    listaMontoHaber.push(montoH);
+  }
+};
+
+function eliminarHaber(codigo,monto){
+  $("#ih_"+codigo).remove();
+  totalHaber=totalHaber-parseFloat(monto);
+  $("#totalHaber").html("Total Haber: "+totalHaber+"");
+  for(i=0;i<listaHaber.length;i++){
+    if(listaHaber[i]==codigo){
+      listaHaber.splice(i,1);
+      listaMontoHaber.splice(i,1);
+    }
+  }
+}
+
+//GUARDAR AJUSTES
+function guardarTransaccion(){
+  var txtGlosa = $("#txtGlosa").val();
+  if (totalHaber==0 && totalDebe==0) {
+    alert("Por favor ingrese transacciones para el ajuste");
+  }else{
+    if (totalHaber==totalDebe) {
+      if (txtGlosa=="") {
+        alert("Ingrese descripcion del ajustes");
+      }else {
+        //guardarTotalTransaccion(totalDebe,txtGlosa);
+        guardarTransaccionBD(txtGlosa);
+        alert("Ajuste registrado correctamente");
+        window.location="ajustes";
+      }
+    }else{
+      alert("Los montos del DEBE y del HABER no equilibran");
+    }
+  }
+}
+
+
+function guardarTransaccionBD(txtGlosa){
+  for(i=0;i<listaDebe.length;i++){
+    insertarDebe(listaDebe[i],listaMontoDebe[i],txtGlosa);
+  }
+  for(i=0;i<listaHaber.length;i++){
+    insertarHaber(listaHaber[i],listaMontoHaber[i],txtGlosa);
+  }
+
+}
+
+function insertarDebe(codigo,monto,txtGlosa){
+  var data="accion=IngresarAjusteDebe&codigoD="+codigo+"&montoD="+monto+"&nombreD="+txtGlosa+"";
+  $.post("Controlador/contTransaccion.php", data, function (data_devuelta) {
+  });
+}
+
+function insertarHaber(codigo,monto,txtGlosa){
+  var data="accion=IngresarAjusteHaber&codigoH="+codigo+"&montoH="+monto+"&nombreH="+txtGlosa+"";
+  $.post("Controlador/contTransaccion.php", data, function (data_devuelta) {
+  });
+}
+
+
 </script>
 <div class="page-header">
   <h1><span class="text-light-gray">Catalago / </span>Registrar</h1>
@@ -213,8 +346,6 @@ function abrirFin(codigo,nombre){
 
 <div class="row">
   <div class="col-sm-6">
-    <form  action="" method="POST">
-
 
     <div class="panel">
       <div class="panel-heading">
@@ -228,7 +359,27 @@ function abrirFin(codigo,nombre){
           <div class="col-md-12">
             <div id="nombreCD"><b>Nombre:</b> ---</div>
           </div>
-          <input type="hidden" id="codigoCuenta" name="codigoCuenta" value="">
+
+          <div class="col-md-12">
+            <div id="nombreCD"><b>Nombre:</b> ---</div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label><b>Monto:</b> </label>
+              <input type="text" id="montoT" value="" class="inputTexto">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label><b>Tipo:</b> </label>
+              <select id="tipoT">
+                <option value="D">DEBE</option>
+                <option value="H">HABER</option>
+              </select>
+              <input type="hidden" id="codigoCuenta" value="">
+              <input type="hidden" id="nombreCuenta" value="">
+            </div>
+          </div>
 
 
         </div>
@@ -236,11 +387,65 @@ function abrirFin(codigo,nombre){
       </div>
 
       <div class="panel-footer text-right">
-        <input type="submit" name="guardarCatalago" class="btn btn-primary" value="Agregar">
+        <input type="submit" id="agregarT" onclick="agregarTransaccion();" class="btn btn-primary" value="Agregar">
       </div>
 
     </div>
-    </form>
+  </div>
+
+  <div class="col-sm-6">
+
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-title">Ajustes</span>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <input class="col-md-12" type="text" id="txtGlosa" value="">
+        </div>
+      </div>
+      <div class="panel-footer text-right">
+        <input type="submit" onclick="guardarTransaccion();" class="btn btn-primary" value="Guardar">
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-title">Ajustes</span>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Cuenta</th>
+                <th>Debe</th>
+                <th>Haber</th>
+                <th>Accion</th>
+              </tr>
+            </thead>
+            <tbody id="listaTransacciones">
+
+            </tbody>
+          </table>
+
+          <p style="text-align:center;"><b id="totalDebe">Total Debe: 0</b>&ensp;&ensp;&ensp;&ensp;&ensp;<b id="totalHaber">Total Haber: 0</b></p>
+
+
+        </div>
+
+      </div>
+
+    </div>
   </div>
 
 

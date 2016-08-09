@@ -86,6 +86,12 @@ if ($_SESSION["ss_usuario"]){
 				if ($dato=="registrarUsuario" || $dato=="listarUsuario") {
 					include_once("Vista/$dato.php");
 				}
+				if ($dato=="ajustes") {
+					include_once("Vista/$dato.php");
+				}
+				if ($dato=="balanzaComprobacionAjustada") {
+					include_once("Vista/$dato.php");
+				}
 			}else{
 				include_once("Vista/inicio.php");
 			}

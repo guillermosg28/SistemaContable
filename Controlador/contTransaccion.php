@@ -37,5 +37,14 @@ if(isset($_POST["accion"])){
     $objTransaccion->agregarTransaccion($_POST['total'],$_POST['nombre'],$asiento,$periodo,$usuario);
   }
 
+  //INGRESAR AJUSTE DEBE
+  if ($accion=="IngresarAjusteDebe") {
+    $objTransaccion->Agregar_Ajuste_Debe($_POST['codigoD'],$periodo,$_POST['montoD'],$_POST['nombreD']);
+  }
+
+  if ($accion=="IngresarAjusteHaber") {
+    $objTransaccion->Agregar_Ajuste_Haber($_POST['codigoH'],$periodo,$_POST['montoH'],$_POST['nombreH']);
+  }
+
 }
 ?>

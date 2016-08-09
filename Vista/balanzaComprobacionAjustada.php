@@ -1,6 +1,6 @@
 
 <div class="page-header">
-  <h1><span class="text-light-gray">Balanza de Comprobación antes de ajustes</span></h1>
+  <h1><span class="text-light-gray">Balanza de Comprobación Ajustada</span></h1>
 </div> <!-- / .page-header -->
 
 
@@ -10,25 +10,24 @@
 
     <div class="panel">
       <div class="panel-heading">
-        <span class="panel-title">Balanza de Comprobación antes de ajustes</span>
+        <span class="panel-title">Balanza de Comprobación Ajustada</span>
       </div>
       <div class="panel-body">
         <div class="row">
-          <table class="table">
+          <table class="table table-bordered">
             <thead>
               <tr>
                 <th>N° Cuenta</th>
                 <th>Cuentas</th>
-                <th>Debe</th>
-                <th>Haber</th>
+                <th>Saldo antes de ajustes</th>
+                <th>Ajustes</th>
+                <th>Saldo Ajustado</th>
               </tr>
             </thead>
             <tbody>
               <?php
               $finTotalHaber =0;
               $finTotalDebe=0;
-              $totalHaber=0;
-              $totalDebe=0;
               $datoCatalago = $objCatalago->Listar_Catalagos();
               foreach ($datoCatalago as $rowC):
                 ?>
@@ -36,16 +35,15 @@
                   <td><?=$rowC['cuenta_codigo']?></td>
                   <td><?=$rowC['cuenta_nombre']?></td>
                   <?php
-
+                  $totalHaber=0;
+                  $totalDebe=0;
 
                   $rsTransaccion = $objTransaccion->Lista_Movimiento_Mayor($rowC['cuenta_codigo']);
                   while($datoTransaccion=$rsTransaccion->fetchObject()){
-                    //echo "--->".$datoTransaccion->movimiento_monto;
                     if($datoTransaccion->movimiento_tipo=="D") {
                       $totalDebe=$totalDebe+$datoTransaccion->movimiento_monto;
                     }
                     if ($datoTransaccion->movimiento_tipo=="H") {
-                      //echo "--->".$datoTransaccion->movimiento_monto;
                       $totalHaber=$totalHaber+$datoTransaccion->movimiento_monto;
                     }
 
@@ -63,12 +61,12 @@
 
                   if($tipoFin=="D") {
                     $finTotalDebe=$finTotal+$finTotalDebe;
-                    echo "<td>".$finTotal."</td><td></td>";
+                    echo "<td>".$finTotal."</td>";
                   }
 
                   if($tipoFin=="H") {
                     $finTotalHaber=$finTotal+$finTotalHaber;
-                    echo "<td></td><td>".$finTotal."</td>";
+                    echo "<td>".$finTotal."</td>";
                   }
 
                    ?>

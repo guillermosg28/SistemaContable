@@ -75,6 +75,18 @@ class Transaccion extends clsAccesoDatos{
       return clsAccesoDatos::obtenerDataSQL($sql);
     }
 
+    public function Agregar_Ajuste_Debe($codigo,$periodo,$monto,$nombre){
+      $sql ="INSERT INTO sc_ajustes(cuenta_codigo,periodo_codigo,ajuste_monto,ajuste_tipo,ajuste_descripcion)
+      VALUES ('$codigo','$periodo','$monto','D','$nombre')";
+      return clsAccesoDatos::ejecutarSQL($sql);
+    }
+
+    public function Agregar_Ajuste_Haber($codigo,$periodo,$monto,$nombre){
+      $sql ="INSERT INTO sc_ajustes(cuenta_codigo,periodo_codigo,ajuste_monto,ajuste_tipo,ajuste_descripcion)
+      VALUES ('$codigo','$periodo','$monto','H','$nombre')";
+      return clsAccesoDatos::ejecutarSQL($sql);
+    }
+
 
 
 }

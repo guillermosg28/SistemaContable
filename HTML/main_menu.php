@@ -103,6 +103,20 @@ for ($i=0; $i < $tamanoArray; $i++) {
 
 <?php
 for ($i=0; $i < $tamanoArray; $i++) {
+	if ($arrayPermiso[$i]==9) {
+	?>
+	<li><a href="ajustes"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Ajustes</span></a></li>
+<?php 	} } ?>
+
+<?php
+for ($i=0; $i < $tamanoArray; $i++) {
+	if ($arrayPermiso[$i]==10) {
+	?>
+	<li><a href="balanzaComprobacionAjustada"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Balanza de Comprobacion Ajustada</span></a></li>
+<?php 	} } ?>
+
+<?php
+for ($i=0; $i < $tamanoArray; $i++) {
 	if ($arrayPermiso[$i]==8) {
 	?>
 	<li class="mm-dropdown">
@@ -117,6 +131,8 @@ for ($i=0; $i < $tamanoArray; $i++) {
 		</ul>
 	</li>
 <?php 	} } ?>
+
+
 
 
 	</ul>
