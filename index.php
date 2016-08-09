@@ -19,6 +19,7 @@ $objUsuario= new Usuario;
 //SESSIONES
 $_SESSION['s_periodo']="1";
 
+if ($_SESSION["ss_usuario"]){
 ?>
 	<!DOCTYPE html>
 	<html class="gt-ie8 gt-ie9 not-ie">
@@ -102,6 +103,10 @@ $_SESSION['s_periodo']="1";
 	<script src="Js/Divisionaria.js"></script>
 	<script src="Js/SubDivisionaria.js"></script>
 
-
 </body>
 </html>
+<?php
+}else {
+	header('Location: login.php');
+}
+?>

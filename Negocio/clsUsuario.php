@@ -9,12 +9,21 @@ class Usuario extends clsAccesoDatos{
         parent::__construct();
     }
 
-    public function listarPermisos(){
-        $sql = "SELECT *
-        from sc_usuariospermisos
-        ORDER BY usuariospermisos_nombre ASC";
+    public function Logeo($user,$pass){
+		$sql = "SELECT COUNT(usuario_usuario) AS verificar
+		FROM sc_usuarios
+		WHERE usuario_usuario='$user' AND usuario_contrasena='$pass'";
+		return clsAccesoDatos::obtenerDataSQL($sql);
+	}
+
+	public function Logeado($user,$pass){
+		$sql = "SELECT *
+        FROM sc_usuarios
+        WHERE usuario_usuario='$user' AND usuario_contrasena='$pass'";
         return clsAccesoDatos::obtenerDataSQL($sql);
-    }
+	}
+
+
 
 }
 ?>
