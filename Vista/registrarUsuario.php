@@ -6,16 +6,38 @@ if (isset($_POST['R_Registrar'])) {
 
   $plancontable = $_POST['u_plancontable'];
 	$catalago = $_POST['u_catalago'];
-	$permisos = "";
-	if (!$slider==NULL) {
-    
-		$permisos = $permisos . $slider.",";
-	}
-	if (!$agenda==NULL) {
-		$permisos = $permisos . $agenda.",";
-	}
+	$periodo= $_POST['u_periodo'];
+  $transaccion = $_POST['u_transaccion'];
+  $librodiario = $_POST['u_librodiario'];
+  $libromayor = $_POST['u_libromayor'];
+  $balanzadecomprobaciondeajustes = $_POST['u_balanzadecomprobaciondeajustes'];
+  $usuarios= $_POST['u_usuarios'];
 
-
+  if (!$plancontable==NULL) {
+		$permisos = $permisos . $plancontable.",";
+	}
+  if (!$catalago==NULL) {
+		$permisos = $permisos . $catalago.",";
+	}
+  if (!$periodo==NULL) {
+		$permisos = $permisos . $perdiodo.",";
+	}
+  if (!$transaccion==NULL) {
+		$permisos = $permisos . $transaccion.",";
+	}
+  if (!$librodiario==NULL) {
+		$permisos = $permisos . $librodiario.",";
+	}
+  if (!$libromayor==NULL) {
+		$permisos = $permisos . $libromayor.",";
+	}
+  if (!$balanzadecomprobaciondeajustes==NULL) {
+		$permisos = $permisos . $balanzadecomprobaciondeajustes.",";
+	}
+  if (!$usuarios==NULL) {
+		$permisos = $permisos . $usuarios.",";
+	}
+  //echo "--".$permisos;
 	//$ingresar =$usuariosql->Registrar_Usuario($usuario,$contrasena,$permisos);
 	echo '<div class="alert alert-success">
 	<button type="button" class="close" data-dismiss="alert">×</button>
@@ -60,17 +82,30 @@ if (isset($_POST['R_Registrar'])) {
     				<div class="form-group">
     					<label class="col-md-2 control-label" for="select-1">Permisos: </label>
     					<div class="col-md-10">
-                <?php
-                $rsPermiso= $objUsuario->listarPermisos();
-                while ($datoPermiso=$rsPermiso->fetchObject()) {
-                ?>
                 <label class="checkbox">
-    							<input type="checkbox" value="<?=$datoPermiso->usuariospermisos_codigo?>" name="u<?=$datoPermiso->usuariospermisos_codigo?>">
-    							<?=$datoPermiso->usuariospermisos_nombre?>
+    							<input type="checkbox" value="1" name="u_plancontable"> plan Contable
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" value="2" name="u_catalago"> Catalago
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" value="3" name="u_periodo"> Periodo
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" value="4" name="u_transaccion"> Transaccion
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" value="5" name="u_librodiario"> Libro Diario
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" value="6" name="u_libromayor"> Libro Mayor
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" value="7" name="u_balanzadecomprobaciondeajustes"> Balanza De Comprobacion De Ajustes
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" value="8" name="u_libromayor"> Usuarios
     						</label>
-                <?php
-                }
-                 ?>
     					</div>
     				</div>
 

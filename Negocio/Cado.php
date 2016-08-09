@@ -44,7 +44,7 @@ class clsAccesoDatos{
 	//Servidor de Base de Datos
 	private $gServidor = "localhost";
 	//Nombre de Base de Datos
-	private $gBaseDatos = "sistemacontable";
+	private $gBaseDatos = "sistemacontables";
 	//Tipo de Base Datos
 	private $gTipoBD = 2; //1=SQLSERVER, 2=MYSQL, 3=POSTGRESQL
 	public $gTipoConex = 1; //1=PDO, 2 = PDOSICA
@@ -62,7 +62,7 @@ class clsAccesoDatos{
 		if($this->gTipoBD==2){
 			$this->gServidor = "localhost";
 			$user='root';
-			$pass='root';
+			$pass='';
 		}
 		if($this->gTipoBD==3){
 			$this->gServidor = "localhost";
