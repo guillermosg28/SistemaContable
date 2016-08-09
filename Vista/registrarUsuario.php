@@ -10,9 +10,10 @@ if (isset($_POST['R_Registrar'])) {
   $transaccion = $_POST['u_transaccion'];
   $librodiario = $_POST['u_librodiario'];
   $libromayor = $_POST['u_libromayor'];
-  $balanzadecomprobaciondeajustes = $_POST['u_balanzadecomprobaciondeajustes'];
+  $balanzadecomprobacionantesdeajustes = $_POST['u_balanzadecomprobacionantesdeajustes'];
   $usuarios= $_POST['u_usuarios'];
   $ajustes=$_POST['u_ajustes'];
+  $balanzadecomprobacionajustada=$_POST['u_balanzadecomprobacionajustada'];
 
   if (!$plancontable==NULL) {
 		$permisos = $permisos . $plancontable.",";
@@ -38,6 +39,13 @@ if (isset($_POST['R_Registrar'])) {
   if (!$usuarios==NULL) {
 		$permisos = $permisos . $usuarios.",";
 	}
+  if (!$ajustes==NULL) {
+		$permisos = $permisos . $ajustes.",";
+	}
+  if (!$balanzadecomprobacionajustada==NULL) {
+    $permisos = $permisos . $balanzadecomprobacionajustada.",";
+  }
+
 	$ingresar =$objUsuario->Registrar_Usuario($usuario,$contrasena,$permisos);
 	echo '<div class="alert alert-success">
 	<button type="button" class="close" data-dismiss="alert">×</button>
@@ -101,13 +109,16 @@ if (isset($_POST['R_Registrar'])) {
                   <input type="checkbox" value="6" name="u_libromayor"> Libro Mayor
                 </label>
                 <label class="checkbox">
-                  <input type="checkbox" value="7" name="u_balanzadecomprobaciondeajustes"> Balanza De Comprobacion De Ajustes
+                  <input type="checkbox" value="7" name="u_balanzadecomprobacionantesdeajustes"> Balanza De Comprobacion antes de Ajustes
                 </label>
                 <label class="checkbox">
                   <input type="checkbox" value="8" name="u_libromayor"> Usuarios
     						</label>
                 <label class="checkbox">
                   <input type="checkbox" value="9" name="u_ajustes"> Ajustes
+    						</label>
+                <label class="checkbox">
+                  <input type="checkbox" value="11" name="u_"> Balanza de comprobacion ajustada
     						</label>
     					</div>
     				</div>

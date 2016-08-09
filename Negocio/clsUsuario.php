@@ -23,7 +23,24 @@ class Usuario extends clsAccesoDatos{
         return clsAccesoDatos::obtenerDataSQL($sql);
 	}
 
+  public function Registrar_Usuario($usuario,$contrasena,$permisos){
+  			$sql = "INSERT INTO sc_usuarios (usuario_usuario, usuario_contrasena,usuario_permisos) VALUES ('$usuario','$contrasena','$permisos')";
+        return clsAccesoDatos::ejecutarSQL($sql);
 
+  }
+  public function Listar_Usuarios(){
+      $sql = "SELECT *
+      FROM sc_usuarios us
+      ORDER BY us.usuario_codigo ASC";
+      return clsAccesoDatos::obtenerDataSQL($sql);
+  }
+
+  public function Eliminar_Usuario($codigo){
+    $sql ="DELETE FROM sc_usuarios
+    WHERE usuario_codigo='$codigo'";
+    echo $sql;
+    return clsAccesoDatos::ejecutarSQL($sql);
+  }
 
 }
 ?>
