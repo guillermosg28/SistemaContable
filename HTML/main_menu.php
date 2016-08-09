@@ -115,6 +115,24 @@ for ($i=0; $i < $tamanoArray; $i++) {
 	<li><a href="balanzaComprobacionAjustada"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Balanza de Comprobacion Ajustada</span></a></li>
 <?php 	} } ?>
 
+
+<?php
+for ($i=0; $i < $tamanoArray; $i++) {
+	if ($arrayPermiso[$i]==11) {
+	?>
+	<li class="mm-dropdown">
+		<a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Estados Financieros</span></a>
+		<ul>
+			<li>
+				<a href="estadoDeResultados"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Estado de Resultados</span></a>
+			</li>
+			<li>
+				<a tabindex="-1" href="estadoSituacionFinanciera"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text"> Estado Situacion Financiera</span></a>
+			</li>
+		</ul>
+	</li>
+<?php 	} } ?>
+
 <?php
 for ($i=0; $i < $tamanoArray; $i++) {
 	if ($arrayPermiso[$i]==8) {

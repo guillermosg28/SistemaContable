@@ -27,10 +27,11 @@
               <?php
               $finTotalHaber =0;
               $finTotalDebe=0;
-              $totalHaber=0;
-              $totalDebe=0;
+
               $datoCatalago = $objCatalago->Listar_Catalagos();
               foreach ($datoCatalago as $rowC):
+                $totalHaber=0;
+                $totalDebe=0;
                 ?>
                 <tr id="cuenta_<?=$rowC['catalago_codigo']?>">
                   <td><?=$rowC['cuenta_codigo']?></td>

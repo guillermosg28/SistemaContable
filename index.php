@@ -7,6 +7,7 @@ require_once("./Negocio/clsElemento.php");
 require_once("./Negocio/clsTransaccion.php");
 require_once("./Negocio/clsCatalago.php");
 require_once("./Negocio/clsUsuario.php");
+require_once("./Negocio/clsAjustes.php");
 
 $objEmpresa = new Empresa;
 $objPeriodo = new Periodo;
@@ -15,6 +16,7 @@ $objElemento = new Elemento;
 $objTransaccion = new Transaccion;
 $objCatalago= new Catalago;
 $objUsuario= new Usuario;
+$objAjustes= new Ajustes;
 
 //SESSIONES
 $_SESSION['s_periodo']="1";
@@ -90,6 +92,9 @@ if ($_SESSION["ss_usuario"]){
 					include_once("Vista/$dato.php");
 				}
 				if ($dato=="balanzaComprobacionAjustada") {
+					include_once("Vista/$dato.php");
+				}
+				if ($dato=="estadoDeResultados" || $dato=="estadoSituacionFinanciera") {
 					include_once("Vista/$dato.php");
 				}
 			}else{

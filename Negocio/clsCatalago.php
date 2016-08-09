@@ -30,5 +30,13 @@ class Catalago extends clsAccesoDatos{
       return clsAccesoDatos::ejecutarSQL($sql);
     }
 
+    public function Listar_Catalagos_Resultados(){
+        $sql = "SELECT *
+        FROM sc_catalago scca
+        INNER JOIN sc_cuenta scc ON scc.cuenta_codigo=scca.cuenta_codigo
+        ORDER BY scca.cuenta_codigo ASC";
+        return clsAccesoDatos::obtenerDataSQL($sql);
+    }
+
 }
 ?>
